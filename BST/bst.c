@@ -8,37 +8,36 @@ void inicializarBST(arvoreBST * raiz) {
 }
 
 
-arvoreBST inserirBST (arvoreBST raiz, char* codigo, int indice)
-{ 
-  
+arvoreBST inserirBST(arvoreBST raiz, char *codigo, int indice) {
+    if (raiz == NULL) {
+        arvoreBST no = (arvoreBST)malloc(sizeof(struct noBST)); // Alocar memória para o novo nó
+        if (no == NULL) {
+            printf("Erro ao alocar memória para novo nó.\n");
+            exit(EXIT_FAILURE);
+        }
 
-  if (raiz == NULL)
-    {
-      arvoreBST no = (arvoreBST) malloc (sizeof (arvoreBST));
-      no->codigo = (char*)malloc(sizeof(codigo));
-      
-      strcpy(no->codigo,codigo);
-      no->indice = indice;
-      no->dir = NULL;
-      no->esq = NULL;
-      return no;
+        // Alocar memória para armazenar o código
+        no->codigo = (char *)malloc(strlen(codigo) + 1); // +1 para o caractere nulo de terminação
+        if (no->codigo == NULL) {
+            printf("Erro ao alocar memória para o código.\n");
+            exit(EXIT_FAILURE);
+        }
+        strcpy(no->codigo, codigo); // Copiar o código para o novo nó
+        no->indice = indice; // Atribuir o índice
+        no->esq = NULL; // Definir os filhos como NULL
+        no->dir = NULL;
+
+        return no; // Retornar o novo nó
+    } else {
+        if (strcmp(codigo, raiz->codigo) > 0) {
+            raiz->dir = inserirBST(raiz->dir, codigo, indice); // Inserir à direita se o código for maior
+        } else {
+            raiz->esq = inserirBST(raiz->esq, codigo, indice); // Inserir à esquerda se o código for menor ou igual
+        }
+        return raiz; // Retornar a raiz atualizada
     }
-  else
-    {
-      if (strcmp(codigo , raiz->codigo) > 0) 
-	{
-	  raiz->dir = inserirBST (raiz->dir, codigo, indice);
-
-	}
-      else
-	{
-	  raiz->esq = inserirBST (raiz->esq, codigo, indice);
-	}
-      return raiz;
-    }
-
-  return raiz;
 }
+
 
 
 void preorderBST (arvoreBST raiz)
@@ -52,17 +51,17 @@ void preorderBST (arvoreBST raiz)
     }
 }
 
-void inorderBST (arvoreBST raiz)
-{
+  void inorderBST (arvoreBST raiz)
+  {
 
-  if (raiz != NULL)
-    {
-      inorderBST (raiz->esq);
-      printf ("%s ", raiz->codigo);  
-      inorderBST (raiz->dir);
-    }
+    if (raiz != NULL)
+      {
+        inorderBST (raiz->esq);
+        printf ("%s ", raiz->codigo);  
+        inorderBST (raiz->dir);
+      }
 
-}
+  }
 
 
 void posorderBST (arvoreBST raiz)

@@ -29,6 +29,7 @@ int main() {
                 
                 adicionarRoupa(&tab, ler_dados());
                 puts("Roupa adicionada com sucesso!");
+                salvar_arquivo_BST("indicesBST.dat", tab.indice_bst); // Salvar os índices da BST após a adição
                 break;
 
             case 2:
@@ -36,8 +37,7 @@ int main() {
 						char codigo[50];					
 						scanf("%s", codigo);
 						removerRoupaIndiceBST(&tab, codigo);  
-						salvar_arquivo_BST("indicesBST.dat", tab.indice_bst);	
-						puts("Roupa removida em indicesBST.dat com sucesso!");						
+						salvar_arquivo_BST("indicesBST.dat", tab.indice_bst);							
 						break;
             case 5:
 						inorderBST(tab.indice_bst);
